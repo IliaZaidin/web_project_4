@@ -1,0 +1,28 @@
+.profile {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 150px 391px 24px 315px;
+    grid-template-rows: auto 39px 22px auto;
+    grid-template-areas:
+    "picture . . ."
+    "picture title edit-button add-button"
+    "picture subtitle . add-button"
+    "picture . . .";
+    align-items: center;
+}
+
+@media screen and (max-width: 879px) {
+    .profile {
+        grid-template-columns: 29px 206px 18px 29px;
+        grid-template-rows: 120px 30px 22px 14px 14px 36px 50px;
+        grid-template-areas:
+        ". picture picture ."
+        ". . . ."
+        ". title edit-button ."
+        ". . . ."
+        ". subtitle subtitle ."
+        ". . . ."
+        "add-button add-button add-button add-button";
+        justify-items: center;
+    }
+}

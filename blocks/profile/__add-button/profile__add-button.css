@@ -1,0 +1,22 @@
+.profile__add-button {
+    border: 0;
+    grid-area: add-button;
+    justify-self: flex-end;
+    width: 150px;
+    height: 50px;
+    background-image: url(../../../images/AddButton.png);
+    background-color: inherit;
+    background-size: 100% 100%;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 879px) {
+    .profile__add-button {
+        justify-self: inherit;
+        width: 282px;
+    }
+}
+
+.profile__add-button:hover {
+    background-image: url(../../../images/AddButtonHover.png);
+}

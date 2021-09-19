@@ -1,0 +1,11 @@
+.picture-grid__item {
+    background-color: #ffffff;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 21px 223px 21px 17px;
+    grid-template-rows: 282px 79px;
+    grid-template-areas: 
+    "picture picture picture picture"
+    ". title like .";
+    align-items: center;
+}

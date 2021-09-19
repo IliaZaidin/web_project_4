@@ -1,0 +1,14 @@
+.picture-grid__like {
+    border: 0;
+    grid-area: like;
+    width: 21px;
+    height: 19px;
+    background-image: url(../../../images/LikeButtonInactive.png);
+    background-color: inherit;
+    background-size: 100% 100%;
+    cursor: pointer;
+}
+
+.picture-grid__like:hover {
+    background-image: url(../../../images/LikeButtonHover.png);
+}

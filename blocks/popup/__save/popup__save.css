@@ -1,0 +1,19 @@
+.popup__save {
+    width: 358px;
+    height: 50px;
+    background-image: url(../../../images/SaveButton.png);
+    background-size: 100% 100%;
+    border: none;
+    cursor: pointer;
+    font-family: Inter, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.popup__save:hover {
+    background-image: url(../../../images/SaveButtonHover.png);
+}
