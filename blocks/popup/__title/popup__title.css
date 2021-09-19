@@ -8,3 +8,12 @@
     line-height: 120%;
     color: #000000;
 }
+
+@media screen and (max-width: 879px) {
+    .popup__title {
+        margin: 25px 0 76px;
+        width: 238px;
+        font-size: 18px;
+        line-height: 122%;
+    }
+}

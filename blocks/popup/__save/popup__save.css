@@ -9,11 +9,20 @@
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
-    line-height: 22px;
+    line-height: 122%;
     text-align: center;
     color: #FFFFFF;
 }
 
 .popup__save:hover {
     background-image: url(../../../images/SaveButtonHover.png);
+}
+
+@media screen and (max-width: 879px) {
+    .popup__save {
+        width: 238px;
+        height: 46px;
+        font-size: 14px;
+        line-height: 121%;
+    }
 }

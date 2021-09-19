@@ -11,10 +11,11 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 function openPopup () {
   popupName.value = profileTitle.textContent;
   popupAbout.value = profileSubtitle.textContent;
-  popup.classList.add('popup__opened');
+  popup.classList.add('popup_opened');
 }
+
 function closePopup () {
-  popup.classList.remove('popup__opened');
+  popup.classList.remove('popup_opened');
 }
 
 function saveProfile (event) {

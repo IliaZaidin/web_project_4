@@ -8,3 +8,10 @@
     align-items: center;
     position: relative;
 }
+
+@media screen and (max-width: 879px) {
+    .popup__edit-form {
+        width: 282px;
+        height: 322px;
+    }
+}
