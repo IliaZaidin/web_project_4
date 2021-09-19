@@ -6,5 +6,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* visibility: hidden; */
+    visibility: hidden;
+}
+
+.popup__opened {
+    visibility: visible;
 }
