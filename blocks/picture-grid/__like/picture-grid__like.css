@@ -3,12 +3,12 @@
     grid-area: like;
     width: 21px;
     height: 19px;
-    background-image: url(../../../images/LikeButtonInactive.png);
+    background-image: url(../../../images/like-button-inactive.png);
     background-color: inherit;
-    background-size: 100% 100%;
+    background-size: 100%;
     cursor: pointer;
 }
 
 .picture-grid__like:hover {
-    background-image: url(../../../images/LikeButtonHover.png);
+    opacity: 0.5;
 }

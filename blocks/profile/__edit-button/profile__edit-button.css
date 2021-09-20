@@ -3,10 +3,14 @@
     grid-area: edit-button;
     width: 24px;
     height: 24px;
-    background-image: url(../../../images/EditButton.png);
+    background-image: url(../../../images/edit-button.png);
     background-size: cover;
     background-color: inherit;
-    cursor:pointer;
+    cursor: pointer;
+}
+
+.profile__edit-button:hover {
+    opacity: 0.5;
 }
 
 @media screen and (max-width: 879px) {
@@ -17,7 +21,4 @@
     }
 }
 
-.profile__edit-button:hover {
-    background-image: url(../../../images/EditButtonHover.png);
-}
 

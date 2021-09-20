@@ -1,5 +1,5 @@
 .popup__about {
-    margin: 29.74px 0 48px;
+    margin: 30px 0 48px;
     width: 358px;
     font-family: Inter, serif;
     font-style: normal;
@@ -8,7 +8,7 @@
     line-height: 121%;
     color: #000000;
     border: none;
-    border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+    border-bottom: 1px solid #0000002c;
 }
 
 @media screen and (max-width: 879px) {
