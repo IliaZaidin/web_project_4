@@ -1,5 +1,4 @@
 .profile__add-button {
-    border: 0;
     grid-area: add-button;
     justify-self: flex-end;
     width: 150px;
