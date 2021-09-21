@@ -3,20 +3,22 @@
     justify-self: flex-end;
     width: 150px;
     height: 50px;
-    font-size: 30px;
+    font-size: 40px;
     color: #ffffff;
     background-color: #000000;
     border: solid 2px #ffffff;
+    border-radius: 2px;
     cursor: pointer;
 }
 
 .profile__add-button:hover {
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 @media screen and (max-width: 879px) {
     .profile__add-button {
         justify-self: inherit;
         width: 282px;
+        font-size: 30px;
     }
 }
