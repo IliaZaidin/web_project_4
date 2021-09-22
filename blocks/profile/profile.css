@@ -2,7 +2,7 @@
     max-width: 100%;
     display: grid;
     grid-template-columns: 150px 391px 24px 315px;
-    grid-template-rows: auto 39px 22px auto;
+    grid-template-rows: auto 39px 38px auto;
     grid-template-areas:
     "picture . . ."
     "picture title edit-button add-button"

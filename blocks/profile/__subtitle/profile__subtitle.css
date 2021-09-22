@@ -12,6 +12,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    align-self: flex-end;
 }
 
 @media screen and (max-width: 879px) {
