@@ -7,24 +7,27 @@ const closeButton = document.querySelector('.popup__close');
 const saveButton = document.querySelector('.popup__save');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
+const gridButtons = document.querySelectorAll('.picture-grid__like');
 
-function openPopup () {
+editButton.addEventListener('click', ()=> {
   popupName.value = profileTitle.textContent;
   popupAbout.value = profileSubtitle.textContent;
   popup.classList.add('popup_opened');
-}
+});
 
-function closePopup () {
+closeButton.addEventListener('click', ()=> {
   popup.classList.remove('popup_opened');
-}
+});
 
-function saveProfile (event) {
+popupForm.addEventListener('submit', (event)=> {
   event.preventDefault();
   profileTitle.textContent = popupName.value;
   profileSubtitle.textContent = popupAbout.value;
   closePopup();
-}
+});
 
-editButton.addEventListener('click', openPopup);
-closeButton.addEventListener('click', closePopup);
-popupForm.addEventListener('submit', saveProfile);
+gridButtons.forEach((element) => { 
+  element.addEventListener('click', (event)=> {
+      event.target.classList.toggle('picture-grid__like_active');
+  });
+});

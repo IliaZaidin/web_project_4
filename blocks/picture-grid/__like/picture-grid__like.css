@@ -12,3 +12,7 @@
 .picture-grid__like:hover {
     opacity: 0.5;
 }
+
+.picture-grid__like_active {
+    background-image: url(../../../images/like-button-active.png);
+}
