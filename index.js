@@ -9,25 +9,25 @@ const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const gridButtons = document.querySelectorAll('.picture-grid__like');
 
-editButton.addEventListener('click', ()=> {
+editButton.addEventListener('click', () => { //Open profile edit form
   popupName.value = profileTitle.textContent;
   popupAbout.value = profileSubtitle.textContent;
   popup.classList.add('popup_opened');
 });
 
-closeButton.addEventListener('click', ()=> {
+closeButton.addEventListener('click', () => { //Close profile edit form
   popup.classList.remove('popup_opened');
 });
 
-popupForm.addEventListener('submit', (event)=> {
+popupForm.addEventListener('submit', (event) => { //Save edit form and close
   event.preventDefault();
   profileTitle.textContent = popupName.value;
   profileSubtitle.textContent = popupAbout.value;
-  closePopup();
+  popup.classList.remove('popup_opened');
 });
 
-gridButtons.forEach((element) => { 
-  element.addEventListener('click', (event)=> {
-      event.target.classList.toggle('picture-grid__like_active');
+gridButtons.forEach((element) => { //Toggle like button
+  element.addEventListener('click', (event) => {
+    event.target.classList.toggle('picture-grid__like_active');
   });
 });
