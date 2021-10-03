@@ -11,7 +11,7 @@
   <meta name="author" content="Ilia Zaidin">
 </head>
 
-<body>
+<body onload="loadInitialCards()">
   <div class="page">
     <div class="page__wrapper">
       <header class="header">
@@ -23,59 +23,65 @@
           <img class="profile__picture" src="./images/jacques-cousteau.png" alt="Jacques Cousteau">
           <button class="profile__edit-button" type="button"></button>
           <button class="profile__add-button" type="button">+</button>
-          <h1 class="profile__title">Jacques Cousteau</h1>
-          <p class="profile__subtitle">Explorer</p>
+          <h1 class="profile__title">Ilia Zaidin</h1>
+          <p class="profile__subtitle">Web Developer</p>
         </section>
 
         <section class="picture-grid">
           <div class="picture-grid__item">
-            <img class="picture-grid__img" src="./images/yosemite-valley.png" alt="Yosemite Valley">
-            <h2 class="picture-grid__title">Yosemite Valley</h2>
+            <img class="picture-grid__img"
+              src="https://www.planetware.com/wpimages/2020/01/california-best-lakes-lake-tahoe.jpg">
+            <h2 class="picture-grid__title">Card from HTML</h2>
             <button class="picture-grid__like" type="button"></button>
-          </div>
-          <div class="picture-grid__item">
-            <img class="picture-grid__img" src="./images/lake-louise.png" alt="Lake Louise">
-            <h2 class="picture-grid__title">Lake Louise</h2>
-            <button class="picture-grid__like" type="button"></button>
-          </div>
-          <div class="picture-grid__item">
-            <img class="picture-grid__img" src="./images/bald-mountains.png" alt="Bald Mountains">
-            <h2 class="picture-grid__title">Bald Mountains</h2>
-            <button class="picture-grid__like" type="button"></button>
-          </div>
-          <div class="picture-grid__item">
-            <img class="picture-grid__img" src="./images/latemar-mount.png" alt="Latemar">
-            <h2 class="picture-grid__title">Latemar</h2>
-            <button class="picture-grid__like" type="button"></button>
-          </div>
-          <div class="picture-grid__item">
-            <img class="picture-grid__img" src="./images/vanoise-lake.png" alt="Vanoise National Park">
-            <h2 class="picture-grid__title">Vanoise National Park</h2>
-            <button class="picture-grid__like" type="button"></button>
-          </div>
-          <div class="picture-grid__item">
-            <img class="picture-grid__img" src="./images/lagodi-braies.png" alt="Lago di Braies">
-            <h2 class="picture-grid__title">Lago di Braies</h2>
-            <button class="picture-grid__like" type="button"></button>
+            <button class="picture-grid__delete" type="button"></button>
           </div>
         </section>
       </main>
 
-      <section class="popup">
-        <form class="popup__edit-form" name="form">
-          <h2 class="popup__title">Edit profile</h2>
-          <input class="popup__name" type="text">
-          <input class="popup__about" type="text">
-          <button class="popup__save" type="submit">Save</button>
-          <button class="popup__close" type="button">&#10005;</button>
+      <section class="popup popup_type_profile">
+        <form class="popup__form popup__form_type_profile" name="form">
+          <h2 class="popup__title popup__title_type_form">Edit profile</h2>
+          <input class="popup__input popup__input_type_name" name="profile-name" type="text" placeholder="Full name">
+          <input class="popup__input popup__input_type_about" name="profile-about" type="text" placeholder="Occupation">
+          <button class="popup__submit" type="submit">Save</button>
+          <button class="popup__close popup__close_type_profile" type="button">&#10005;</button>
         </form>
       </section>
+
+      <section class="popup popup_type_card">
+        <form class="popup__form popup__form_type_card" name="card">
+          <h2 class="popup__title popup__title_type_card">New place</h2>
+          <input class="popup__input popup__input_type_title" name="card-title" type="text" placeholder="Title">
+          <input class="popup__input popup__input_type_link" name="card-link" type="text" placeholder="Image link">
+          <button class="popup__submit" type="submit">Create</button>
+          <button class="popup__close popup__close_type_card" type="button">&#10005;</button>
+        </form>
+      </section>
+
+      <section class="picture-large">
+        <div class="picture-large__wrapper">
+          <h2 class="picture-large__title"></h2>
+          <img class="picture-large__image">
+          <button class="picture-large__close" type="button">&#10005;</button>
+        </div>
+      </section>
+
 
       <footer class="footer">
         <h2 class="footer__title">&copy; 2021 Ilia Zaidin</h2>
       </footer>
     </div>
   </div>
+
+  <template class="card-template">
+    <div class="picture-grid__item">
+      <img class="picture-grid__img">
+      <h2 class="picture-grid__title"></h2>
+      <button class="picture-grid__like" type="button"></button>
+      <button class="picture-grid__delete" type="button"></button>
+    </div>
+  </template>
+
   <script src="./index.js" defer></script>
 </body>
 

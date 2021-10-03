@@ -1,5 +1,5 @@
-.popup__name {
-    margin: 0;
+.popup__input {
+    margin-bottom: 30px;
     width: 358px;
     font-family: Inter, serif;
     font-style: normal;
@@ -12,7 +12,7 @@
 }
 
 @media screen and (max-width: 879px) {
-    .popup__name {
+    .popup__input {
         width: 238px;
     }
 }

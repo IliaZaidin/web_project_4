@@ -1,0 +1,16 @@
+.picture-grid__delete {
+  border: 0;
+  width: 18px;
+  height: 19px;
+  background-image: url(../../../images/delete-button.png);
+  background-color: transparent;
+  background-size: 100%;
+  cursor: pointer;
+  position: absolute;
+  top: 18px;
+  right: 15px;
+}
+
+.picture-grid__delete:hover {
+  opacity: 0.6;
+}
