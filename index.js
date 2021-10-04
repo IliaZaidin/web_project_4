@@ -48,7 +48,7 @@ cardPopupForm.addEventListener('submit', (event) => {  //Create new place card
   createCard();
 });
 
-//================================ card ============================================
+//================================ cards ============================================
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -75,11 +75,11 @@ const initialCards = [
     link: "https://code.s3.yandex.net/web-code/lago.jpg"
   }
 ];
-
 const picturePopup = document.querySelector('.picture-large');
 const picturePopupTitle = document.querySelector('.picture-large__title');
 const picturePopupLink = document.querySelector('.picture-large__image');
 const picturePopupClose = document.querySelector('.picture-large__close');
+
 const cardTemplate = document.querySelector('.card-template').content;
 const cardWrapper = document.querySelector('.picture-grid');
 
@@ -91,7 +91,6 @@ function createCard() { //Create card
   cardPopup.classList.remove('popup_is_opened');
   cardPopupTitle.value = "";
   cardPopupLink.value = "";
-  checkEventListeners ();
 };
 
 function runOnLoad() { //Run on load to create first 6 cards
@@ -102,29 +101,31 @@ function runOnLoad() { //Run on load to create first 6 cards
   };
 };
 
-function checkEventListeners () {
-  cardWrapper.querySelectorAll('.picture-grid__like').forEach ((element) => { //Toggle like button
-    element.addEventListener('click', (event) => {
+cardWrapper.addEventListener('click', (event) => {
+  let eventTrigger = event.target.classList.value;
+
+  switch (eventTrigger) {  
+    case 'picture-grid__like': //Toggle like button on
       event.target.classList.toggle('picture-grid__like_active');
-    });
-  });
-  
-  cardWrapper.querySelectorAll('.picture-grid__delete').forEach((element) => { //Delete card
-    element.addEventListener('click', (event) => {
+      break;
+
+    case 'picture-grid__like picture-grid__like_active': //Toggle like button off
+      event.target.classList.toggle('picture-grid__like_active');
+      break;
+      
+    case 'picture-grid__delete': //Delete card
       const card = event.target.closest('.picture-grid__item');
       card.remove();
-    });
-  });
-  
-  cardWrapper.querySelectorAll('.picture-grid__img').forEach((element) => { //Expand picture
-    element.addEventListener('click', (event) => {
+      break;
+
+    case 'picture-grid__img': //Expand picture
       picturePopupLink.setAttribute('src', event.target.src);
       picturePopupTitle.textContent = event.target.nextElementSibling.textContent;
       picturePopup.classList.add('picture-large_is_opened');
-    });
-  });
-  
-  picturePopupClose.addEventListener('click', (event) => {  //Close expanded picture
-      picturePopup.classList.remove('picture-large_is_opened');
-    });
-}
+      break;
+  }
+});
+
+picturePopupClose.addEventListener('click', (event) => {  //Close expanded picture
+  picturePopup.classList.remove('picture-large_is_opened');
+});
