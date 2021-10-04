@@ -75,18 +75,15 @@ const initialCards = [
     link: "https://code.s3.yandex.net/web-code/lago.jpg"
   }
 ];
-const cardWrapper = document.querySelector('.picture-grid');
-const cardTemplate = document.querySelector('.card-template').content;
-const cardButtonLikeAll = cardWrapper.querySelectorAll('.picture-grid__like'); //?
-const cardButtonDeleteAll = cardWrapper.querySelectorAll('.picture-grid__delete'); //?
-const cardImageAll = cardWrapper.querySelectorAll('.picture-grid__img'); //?  querySelectorAll ignores elements created by JS
-const cardTitleAll = document.querySelectorAll('.picture-grid__title'); //?
+
 const picturePopup = document.querySelector('.picture-large');
 const picturePopupTitle = document.querySelector('.picture-large__title');
 const picturePopupLink = document.querySelector('.picture-large__image');
 const picturePopupClose = document.querySelector('.picture-large__close');
+const cardTemplate = document.querySelector('.card-template').content;
+const cardWrapper = document.querySelector('.picture-grid');
 
-function createCard() {
+function createCard() { //Create card
   const cardCreator = cardTemplate.querySelector('.picture-grid__item').cloneNode(true);
   cardCreator.querySelector('.picture-grid__title').textContent = cardPopupTitle.value;
   cardCreator.querySelector('.picture-grid__img').src = cardPopupLink.value;
@@ -104,20 +101,20 @@ function loadInitialCards() { //Run on load to create first 6 cards
   };
 };
 
-/*cardButtonLikeAll*/cardWrapper.querySelectorAll('.picture-grid__like').forEach ((element) => { //Toggle like button
+cardWrapper.querySelectorAll('.picture-grid__like').forEach ((element) => { //Toggle like button
   element.addEventListener('click', (event) => {
     event.target.classList.toggle('picture-grid__like_active');
   });
 });
 
-cardButtonDeleteAll.forEach((element) => { //Delete card
+cardWrapper.querySelectorAll('.picture-grid__delete').forEach((element) => { //Delete card
   element.addEventListener('click', (event) => {
     const card = event.target.closest('.picture-grid__item');
     card.remove();
   });
 });
 
-/*cardImageAll*/cardWrapper.querySelectorAll('.picture-grid__img').forEach((element) => { //Expand picture
+cardWrapper.querySelectorAll('.picture-grid__img').forEach((element) => { //Expand picture
   element.addEventListener('click', (event) => {
     picturePopupLink.setAttribute('src', event.target.src);
     picturePopupTitle.textContent = event.target.nextElementSibling.textContent;
