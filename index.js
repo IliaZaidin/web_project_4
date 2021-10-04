@@ -91,9 +91,10 @@ function createCard() { //Create card
   cardPopup.classList.remove('popup_is_opened');
   cardPopupTitle.value = "";
   cardPopupLink.value = "";
+  checkEventListeners ();
 };
 
-function loadInitialCards() { //Run on load to create first 6 cards
+function runOnLoad() { //Run on load to create first 6 cards
   for (let i = 0; i < 6; i++) {
     cardPopupTitle.value = initialCards[i].name;
     cardPopupLink.value = initialCards[i].link;
@@ -101,27 +102,29 @@ function loadInitialCards() { //Run on load to create first 6 cards
   };
 };
 
-cardWrapper.querySelectorAll('.picture-grid__like').forEach ((element) => { //Toggle like button
-  element.addEventListener('click', (event) => {
-    event.target.classList.toggle('picture-grid__like_active');
+function checkEventListeners () {
+  cardWrapper.querySelectorAll('.picture-grid__like').forEach ((element) => { //Toggle like button
+    element.addEventListener('click', (event) => {
+      event.target.classList.toggle('picture-grid__like_active');
+    });
   });
-});
-
-cardWrapper.querySelectorAll('.picture-grid__delete').forEach((element) => { //Delete card
-  element.addEventListener('click', (event) => {
-    const card = event.target.closest('.picture-grid__item');
-    card.remove();
+  
+  cardWrapper.querySelectorAll('.picture-grid__delete').forEach((element) => { //Delete card
+    element.addEventListener('click', (event) => {
+      const card = event.target.closest('.picture-grid__item');
+      card.remove();
+    });
   });
-});
-
-cardWrapper.querySelectorAll('.picture-grid__img').forEach((element) => { //Expand picture
-  element.addEventListener('click', (event) => {
-    picturePopupLink.setAttribute('src', event.target.src);
-    picturePopupTitle.textContent = event.target.nextElementSibling.textContent;
-    picturePopup.classList.add('picture-large_is_opened');
+  
+  cardWrapper.querySelectorAll('.picture-grid__img').forEach((element) => { //Expand picture
+    element.addEventListener('click', (event) => {
+      picturePopupLink.setAttribute('src', event.target.src);
+      picturePopupTitle.textContent = event.target.nextElementSibling.textContent;
+      picturePopup.classList.add('picture-large_is_opened');
+    });
   });
-});
-
-picturePopupClose.addEventListener('click', (event) => {  //Close expanded picture
-    picturePopup.classList.remove('picture-large_is_opened');
-  });
+  
+  picturePopupClose.addEventListener('click', (event) => {  //Close expanded picture
+      picturePopup.classList.remove('picture-large_is_opened');
+    });
+}
