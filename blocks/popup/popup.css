@@ -7,14 +7,12 @@
     justify-content: center;
     align-items: center;
     visibility: hidden;
-    /* opacity: 0;
-    transition: opacity 0.7s ease;
-    transform: scaleX(0) scaleY(0);
-    transition: transform 0.5s ease; */
+    opacity: 0;
+    transition: opacity 0.7s linear, visibility 0s linear 0.8s;
 }
 
 .popup_is_opened {
+    opacity: 1;
     visibility: visible;
-    /* opacity: 1;
-    transform: scaleX(1) scaleY(1); */
+    transition-delay: 0s;
 }
