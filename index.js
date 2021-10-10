@@ -1,54 +1,21 @@
-//===================== profile ===============================
+/**=======================variables ============================== */
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const profileButtonEdit = document.querySelector('.profile__edit-button');
 const profilePopup = document.querySelector('.popup_type_profile');
-const profilePopupForm = profilePopup.querySelector('.popup__form_type_profile');
+const profilePopupForm = profilePopup.querySelector('.popup__wrapper_type_profile');
 const profilePopupName = profilePopup.querySelector('.popup__input_type_name');
 const profilePopupAbout = profilePopup.querySelector('.popup__input_type_about');
 const profilePopupButtonClose = profilePopup.querySelector('.popup__close_type_profile');
 
-profileButtonEdit.addEventListener('click', () => { //Open profile edit form
-  profilePopupName.value = profileTitle.textContent;
-  profilePopupAbout.value = profileSubtitle.textContent;
-  profilePopup.classList.add('popup_is_opened');
-});
-
-profilePopupButtonClose.addEventListener('click', () => { //Close profile form
-  profilePopup.classList.remove('popup_is_opened');
-});
-
-profilePopupForm.addEventListener('submit', (event) => { //Save edit form and close
-  event.preventDefault();
-  profileTitle.textContent = profilePopupName.value;
-  profileSubtitle.textContent = profilePopupAbout.value;
-  profilePopup.classList.remove('popup_is_opened');
-});
-
-//=================== cardPopup ====================================================
 const cardButtonAdd = document.querySelector('.profile__add-button');
 const cardPopup = document.querySelector('.popup_type_card');
-const cardPopupForm = cardPopup.querySelector('.popup__form_type_card');
+const cardPopupForm = cardPopup.querySelector('.popup__wrapper_type_card');
 const cardPopupTitle = cardPopup.querySelector('.popup__input_type_title');
 const cardPopupLink = cardPopup.querySelector('.popup__input_type_link');
 const cardPopupButtonClose = cardPopup.querySelector('.popup__close_type_card');
-
-cardButtonAdd.addEventListener('click', () => { //Open new place card form
-  cardPopup.classList.remove('popup_closed');
-  cardPopup.classList.add('popup_is_opened');
-});
-
-cardPopupButtonClose.addEventListener('click', () => { //Close new place card form 
-  cardPopup.classList.remove('popup_is_opened');
-  cardPopup.classList.add('popup_closed');
-});
-
-cardPopupForm.addEventListener('submit', (event) => {  //Create new place card
-  event.preventDefault();
-  createCard();
-});
-
-//================================ cards ============================================
+const cardTemplate = document.querySelector('.card-template').content;
+const cardWrapper = document.querySelector('.picture-grid');
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -75,36 +42,82 @@ const initialCards = [
     link: "https://code.s3.yandex.net/web-code/lago.jpg"
   }
 ];
-const picturePopup = document.querySelector('.picture-large');
-const picturePopupTitle = document.querySelector('.picture-large__title');
-const picturePopupLink = document.querySelector('.picture-large__image');
-const picturePopupClose = document.querySelector('.picture-large__close');
 
-const cardTemplate = document.querySelector('.card-template').content;
-const cardWrapper = document.querySelector('.picture-grid');
+const picturePopup = document.querySelector('.popup_type_picture');
+const picturePopupTitle = document.querySelector('.popup__title_type_picture');
+const picturePopupLink = document.querySelector('.popup__picture');
+const picturePopupClose = document.querySelector('.popup__close_type_picture');
 
-function createCard() { //Create card
+/**==================== functions =========================================== */
+function createCard(name, link) { //Create card
   const cardCreator = cardTemplate.querySelector('.picture-grid__item').cloneNode(true);
-  cardCreator.querySelector('.picture-grid__title').textContent = cardPopupTitle.value;
-  cardCreator.querySelector('.picture-grid__img').src = cardPopupLink.value;
-  cardWrapper.prepend(cardCreator);
-  cardPopup.classList.remove('popup_is_opened');
-  cardPopupTitle.value = "";
-  cardPopupLink.value = "";
+  cardCreator.querySelector('.picture-grid__title').textContent = name;
+  cardCreator.querySelector('.picture-grid__img').src = link;
+  cardCreator.querySelector('.picture-grid__img').alt = name;
+  return cardCreator;
+};
+
+function renderCard(element) { //render new card
+  cardWrapper.prepend(element);
+  cardPopupForm.reset();
+  closePopup(cardPopup);
 };
 
 function runOnLoad() { //Run on load to create first 6 cards
   for (let i = 0; i < 6; i++) {
-    cardPopupTitle.value = initialCards[i].name;
-    cardPopupLink.value = initialCards[i].link;
-    createCard();
+    const tempCardHolder = createCard(initialCards[i].name, initialCards[i].link);
+    renderCard(tempCardHolder);
   };
 };
 
-cardWrapper.addEventListener('click', (event) => {
-  let eventTrigger = event.target.classList.value;
+function closePopup(element) { //close popup
+  element.classList.remove('popup_is_opened');
+};
 
-  switch (eventTrigger) {  
+function openPopup(element) { //open popup
+  element.classList.add('popup_is_opened');
+};
+
+/*==================== profile event listeners ===============================*/
+profileButtonEdit.addEventListener('click', () => { //Open profile edit form
+  profilePopupName.value = profileTitle.textContent;
+  profilePopupAbout.value = profileSubtitle.textContent;
+  openPopup(profilePopup);
+});
+
+profilePopupButtonClose.addEventListener('click', () => { //Close profile edit form 
+  closePopup(profilePopup);
+});
+
+profilePopupForm.addEventListener('submit', (event) => { //Save edit form and close
+  event.preventDefault();
+  profileTitle.textContent = profilePopupName.value;
+  profileSubtitle.textContent = profilePopupAbout.value;
+  closePopup(profilePopup);
+});
+
+/*=================== cardPopup event listeners ====================================================*/
+
+cardButtonAdd.addEventListener('click', () => { //Open new card form
+  closePopup(cardPopup);
+  openPopup(cardPopup);
+});
+
+cardPopupButtonClose.addEventListener('click', () => { //Close new card form 
+  closePopup(cardPopup);
+});
+
+cardPopupForm.addEventListener('submit', (event) => {  //Create new card
+  event.preventDefault();
+  const tempCardHolder = createCard(cardPopupTitle.value, cardPopupLink.value);
+  renderCard(tempCardHolder);
+});
+
+/*================================ cards event listeners ============================================*/
+cardWrapper.addEventListener('click', (event) => {
+  const eventTrigger = event.target.classList.value;
+
+  switch (eventTrigger) {
     case 'picture-grid__like': //Toggle like button on
       event.target.classList.toggle('picture-grid__like_active');
       break;
@@ -114,18 +127,19 @@ cardWrapper.addEventListener('click', (event) => {
       break;
       
     case 'picture-grid__delete': //Delete card
-      const card = event.target.closest('.picture-grid__item');
+      let card = event.target.closest('.picture-grid__item');
       card.remove();
+      card = null;
       break;
 
     case 'picture-grid__img': //Expand picture
       picturePopupLink.setAttribute('src', event.target.src);
       picturePopupTitle.textContent = event.target.nextElementSibling.textContent;
-      picturePopup.classList.add('picture-large_is_opened');
+      openPopup(picturePopup);
       break;
   }
 });
 
 picturePopupClose.addEventListener('click', (event) => {  //Close expanded picture
-  picturePopup.classList.remove('picture-large_is_opened');
+  closePopup(picturePopup);
 });

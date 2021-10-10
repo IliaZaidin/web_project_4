@@ -1,0 +1,18 @@
+.popup__wrapper_type_picture {
+  width: unset;
+  height: unset;
+  max-width: 75%;
+  max-height: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+@media screen and (max-width: 879px) {
+  .popup__wrapper_type_picture {
+    width: unset;
+    min-width: 240px;
+    height: 290px;
+  }
+}
