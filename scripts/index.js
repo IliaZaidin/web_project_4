@@ -50,6 +50,8 @@ const picturePopupClose = document.querySelector('.popup__close_type_picture');
 const formCard = cardPopup.querySelector('.form_type_card');
 const formProfile = profilePopup.querySelector('.form_type_profile');
 
+const overlayPopup = document.querySelectorAll('.popup');
+
 /**==================== functions =========================================== */
 function createCard(name, link) { //Create card
   const cardCreator = cardTemplate.querySelector('.picture-grid__item').cloneNode(true);
@@ -80,8 +82,30 @@ function openPopup(element) { //open popup
   element.classList.add('popup_is_opened');
 };
 
+/**=================== Generic event listeners ========================= */
+document.addEventListener('keydown', (event) => { //close popups on Escape button
+  if (event.key === "Escape") {
+    closePopup(cardPopup);
+    closePopup(profilePopup);
+    closePopup(picturePopup);
+  };
+});
+
+overlayPopup.forEach((element)=> {  // close popups if overlay clicked
+  element.addEventListener('click', (event) => {
+    const eventTrigger = [...event.target.classList];
+    if (eventTrigger.includes('popup_type_card')) {
+      closePopup(cardPopup);
+    } else if (eventTrigger.includes('popup_type_profile')) {
+      closePopup(profilePopup);
+    } else if (eventTrigger.includes('popup_type_picture')) {
+        closePopup(picturePopup);
+    }
+  });
+}); 
+
 /*==================== profile event listeners ===============================*/
-profileButtonEdit.addEventListener('click', (event) => { //Open profile edit form
+profileButtonEdit.addEventListener('click', () => { //Open profile edit form
   profilePopupName.value = profileTitle.textContent;
   profilePopupAbout.value = profileSubtitle.textContent;
   openPopup(profilePopup);

@@ -1,5 +1,5 @@
 # Project #4 in the course Basic JavaScript and Working with the Browser.
-The objective is building a one page site using the following tools: designe specs and Figma, adaptive design, grid layout, developing interfaces for different devices, Javascript and more.
+The objective is building a one page site using the following tools: designe specs and Figma, adaptive design, grid layout, developing interfaces for different devices, functionality and form validation using Javascript and more.
 
 Technologies used: HTML, CSS, Javascript.
 
