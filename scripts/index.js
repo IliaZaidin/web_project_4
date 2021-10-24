@@ -4,15 +4,14 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 const profileButtonEdit = document.querySelector('.profile__edit-button');
 const profilePopup = document.querySelector('.popup_type_profile');
 const profilePopupForm = profilePopup.querySelector('.popup__wrapper_type_profile');
-const profilePopupName = profilePopup.querySelector('.popup__input_type_name');
-const profilePopupAbout = profilePopup.querySelector('.popup__input_type_about');
+const profilePopupName = profilePopup.querySelector('.form__input_type_name');
+const profilePopupAbout = profilePopup.querySelector('.form__input_type_about');
 const profilePopupButtonClose = profilePopup.querySelector('.popup__close_type_profile');
 
 const cardButtonAdd = document.querySelector('.profile__add-button');
 const cardPopup = document.querySelector('.popup_type_card');
-const cardPopupForm = cardPopup.querySelector('.popup__wrapper_type_card');
-const cardPopupTitle = cardPopup.querySelector('.popup__input_type_title');
-const cardPopupLink = cardPopup.querySelector('.popup__input_type_link');
+const cardPopupTitle = cardPopup.querySelector('.form__input_type_title');
+const cardPopupLink = cardPopup.querySelector('.form__input_type_link');
 const cardPopupButtonClose = cardPopup.querySelector('.popup__close_type_card');
 const cardTemplate = document.querySelector('.card-template').content;
 const cardWrapper = document.querySelector('.picture-grid');
@@ -48,6 +47,9 @@ const picturePopupTitle = document.querySelector('.popup__title_type_picture');
 const picturePopupLink = document.querySelector('.popup__picture');
 const picturePopupClose = document.querySelector('.popup__close_type_picture');
 
+const formCard = cardPopup.querySelector('.form_type_card');
+const formProfile = profilePopup.querySelector('.form_type_profile');
+
 /**==================== functions =========================================== */
 function createCard(name, link) { //Create card
   const cardCreator = cardTemplate.querySelector('.picture-grid__item').cloneNode(true);
@@ -59,7 +61,7 @@ function createCard(name, link) { //Create card
 
 function renderCard(element) { //render new card
   cardWrapper.prepend(element);
-  cardPopupForm.reset();
+  formCard.reset();
   closePopup(cardPopup);
 };
 
@@ -79,10 +81,11 @@ function openPopup(element) { //open popup
 };
 
 /*==================== profile event listeners ===============================*/
-profileButtonEdit.addEventListener('click', () => { //Open profile edit form
+profileButtonEdit.addEventListener('click', (event) => { //Open profile edit form
   profilePopupName.value = profileTitle.textContent;
   profilePopupAbout.value = profileSubtitle.textContent;
   openPopup(profilePopup);
+  checkInitialFormValidity(formProfile, settings);
 });
 
 profilePopupButtonClose.addEventListener('click', () => { //Close profile edit form 
@@ -97,17 +100,17 @@ profilePopupForm.addEventListener('submit', (event) => { //Save edit form and cl
 });
 
 /*=================== cardPopup event listeners ====================================================*/
-
 cardButtonAdd.addEventListener('click', () => { //Open new card form
-  closePopup(cardPopup);
   openPopup(cardPopup);
+  checkInitialFormValidity(formCard, settings);
 });
 
 cardPopupButtonClose.addEventListener('click', () => { //Close new card form 
   closePopup(cardPopup);
+  formCard.reset();
 });
 
-cardPopupForm.addEventListener('submit', (event) => {  //Create new card
+formCard.addEventListener('submit', (event) => {  //Create new card
   event.preventDefault();
   const tempCardHolder = createCard(cardPopupTitle.value, cardPopupLink.value);
   renderCard(tempCardHolder);

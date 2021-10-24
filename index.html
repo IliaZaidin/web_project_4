@@ -21,38 +21,42 @@
       <main>
         <!-- Profile -->
         <section class="profile"> Profile
-          <img class="profile__picture" src="./images/jacques-cousteau.png" alt="Jacques Cousteau">
+          <img class="profile__picture" src="./images/facephoto.jpg" alt="Jacques Cousteau">
           <button class="profile__edit-button" type="button"></button>
           <button class="profile__add-button" type="button">+</button>
           <h1 class="profile__title">Ilia Zaidin</h1>
-          <p class="profile__subtitle">Web Developer</p>
+          <p class="profile__subtitle">Expert Code Googler</p>
         </section>
         <!-- Pictures -->
         <section class="picture-grid"></section>
       </main>
       <!-- Edit profile -->
       <section class="popup popup_type_profile">
-        <form class="popup__wrapper popup__wrapper_type_profile" name="form">
+        <div class="popup__wrapper popup__wrapper_type_profile">
           <h2 class="popup__title popup__title_type_form">Edit profile</h2>
-          <input class="popup__input popup__input_type_name" name="profile-name" type="text" placeholder="Full name"
-            required>
-          <input class="popup__input popup__input_type_about" name="profile-about" type="text" placeholder="Occupation"
-            required>
-          <button class="popup__submit popup__submit_type_profile" type="submit">Save</button>
           <button class="popup__close popup__close_type_profile" type="button">&#10005;</button>
-        </form>
+          <form class="form form_type_profile" novalidate>
+            <input id="input_type_name" class="form__input form__input_type_name" type="text" placeholder="Full name" minlength="2" maxlength="40" required>
+            <span id="input_type_name_error" class="form__error"></span>
+            <input id="input_type_about" class="form__input form__input_type_about" type="text" placeholder="Occupation" minlength="2" maxlength="200" required>
+            <span id="input_type_about_error" class="form__error"></span>
+            <button class="form__submit form__submit_type_profile" type="submit">Save</button>
+          </form>
+        </div>
       </section>
       <!-- Add cards -->
       <section class="popup popup_type_card">
-        <form class="popup__wrapper popup__wrapper_type_card" name="card">
+        <div class="popup__wrapper popup__wrapper_type_card">
           <h2 class="popup__title popup__title_type_card">New place</h2>
-          <input class="popup__input popup__input_type_title" name="card-title" type="text" placeholder="Title"
-            required>
-          <input class="popup__input popup__input_type_link" name="card-link" type="text" placeholder="Image link"
-            required>
-          <button class="popup__submit popup__submit_type_card" type="submit">Create</button>
           <button class="popup__close popup__close_type_card" type="button">&#10005;</button>
-        </form>
+          <form class="form form_type_card" novalidate>
+            <input id="input_type_title" class="form__input form__input_type_title" type="text" placeholder="Title" minlength="1" maxlength="30" required>
+            <span id="input_type_title_error" class="form__error"></span>
+            <input id="input_type_link" class="form__input form__input_type_link" type="url" placeholder="Image link" required>
+            <span id="input_type_link_error" class="form__error"></span>
+            <button class="form__submit form__submit_type_card" type="submit">Create</button>
+          </form>
+        </div>
       </section>
       <!-- Expand picture -->
       <section class="popup popup_type_picture">
@@ -78,7 +82,8 @@
     </div>
   </template>
 
-  <script src="./index.js" defer></script>
+  <script src="./scripts/index.js" defer></script>
+  <script src="./scripts/validate.js" defer></script>
 </body>
 
 </html>
