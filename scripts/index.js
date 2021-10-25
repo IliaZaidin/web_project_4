@@ -50,7 +50,7 @@ const picturePopupClose = document.querySelector('.popup__close_type_picture');
 const formCard = cardPopup.querySelector('.form_type_card');
 const formProfile = profilePopup.querySelector('.form_type_profile');
 
-const overlayPopup = document.querySelectorAll('.popup');
+const overlayPopups = document.querySelectorAll('.popup');
 
 /**==================== functions =========================================== */
 function createCard(name, link) { //Create card
@@ -63,41 +63,49 @@ function createCard(name, link) { //Create card
 
 function renderCard(element) { //render new card
   cardWrapper.prepend(element);
-  formCard.reset();
   closePopup(cardPopup);
-};
-
-function runOnLoad() { //Run on load to create first 6 cards
-  for (let i = 0; i < 6; i++) {
-    const tempCardHolder = createCard(initialCards[i].name, initialCards[i].link);
-    renderCard(tempCardHolder);
-  };
 };
 
 function closePopup(element) { //close popup
   element.classList.remove('popup_is_opened');
+  const popupSelector = element.classList.value;
+  if (popupSelector.includes('popup_type_card')) {
+    formCard.reset();
+  } else if (popupSelector.includes('popup_type_profile')) {
+    formProfile.reset();
+  }
+  unsetEscapeListener();
 };
 
 function openPopup(element) { //open popup
   element.classList.add('popup_is_opened');
+  setEscapeListener();
 };
 
-/**=================== Generic event listeners ========================= */
-document.addEventListener('keydown', (event) => { //close popups on Escape button
+function closeByEscape (event) { //close popups on Escape button
+  const popupSelector = document.querySelector('.popup_is_opened');
   if (event.key === "Escape") {
-    closePopup(cardPopup);
-    closePopup(profilePopup);
-    closePopup(picturePopup);
+    closePopup(popupSelector);
   };
-});
+};
 
-overlayPopup.forEach((element)=> {  // close popups if overlay clicked
+function setEscapeListener () {  //set event listener for escape button
+  document.addEventListener('keydown', closeByEscape);
+};
+
+function unsetEscapeListener() {   //remove event listener for escape button
+  document.removeEventListener('keydown', closeByEscape);
+};
+
+
+/**=================== Generic event listeners ========================= */
+overlayPopups.forEach((element)=> {  // close popups if overlay is clicked
   element.addEventListener('click', (event) => {
     const eventTrigger = [...event.target.classList];
     if (eventTrigger.includes('popup_type_card')) {
       closePopup(cardPopup);
     } else if (eventTrigger.includes('popup_type_profile')) {
-      closePopup(profilePopup);
+        closePopup(profilePopup);
     } else if (eventTrigger.includes('popup_type_picture')) {
         closePopup(picturePopup);
     }
@@ -109,7 +117,6 @@ profileButtonEdit.addEventListener('click', () => { //Open profile edit form
   profilePopupName.value = profileTitle.textContent;
   profilePopupAbout.value = profileSubtitle.textContent;
   openPopup(profilePopup);
-  checkInitialFormValidity(formProfile, settings);
 });
 
 profilePopupButtonClose.addEventListener('click', () => { //Close profile edit form 
@@ -126,12 +133,10 @@ profilePopupForm.addEventListener('submit', (event) => { //Save edit form and cl
 /*=================== cardPopup event listeners ====================================================*/
 cardButtonAdd.addEventListener('click', () => { //Open new card form
   openPopup(cardPopup);
-  checkInitialFormValidity(formCard, settings);
 });
 
 cardPopupButtonClose.addEventListener('click', () => { //Close new card form 
   closePopup(cardPopup);
-  formCard.reset();
 });
 
 formCard.addEventListener('submit', (event) => {  //Create new card
@@ -156,7 +161,7 @@ cardWrapper.addEventListener('click', (event) => {
     case 'picture-grid__delete': //Delete card
       let card = event.target.closest('.picture-grid__item');
       card.remove();
-      card = null;
+      card = null; //per reviewer's request from previous sprint, for garbage collection
       break;
 
     case 'picture-grid__img': //Expand picture
@@ -170,3 +175,10 @@ cardWrapper.addEventListener('click', (event) => {
 picturePopupClose.addEventListener('click', (event) => {  //Close expanded picture
   closePopup(picturePopup);
 });
+
+window.onload = () => { //Run on load to create first 6 cards
+    for (let i = 0; i < 6; i++) {
+      const tempCardHolder = createCard(initialCards[i].name, initialCards[i].link);
+      renderCard(tempCardHolder);
+    };
+};

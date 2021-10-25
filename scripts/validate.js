@@ -9,10 +9,6 @@ const settings = {
 }
 
 /**==================== functions =========================================== */
-function resetFormValidity (formElement) {
-  console.log("blah");
-}
-
 function toggleButtonState (inputElements, buttonElement, settings) {  
   const hasInvalidInput = inputElements.some(inputElement => !inputElement.validity.valid);
   if (hasInvalidInput) {
@@ -62,15 +58,6 @@ function enableValidation(settings) {
   forms.forEach(formElement => {
     setEventListeners(formElement, settings);
   });
-};
-
-function checkInitialFormValidity(formElement, settings) {  
-  const inputElements = Array.from(formElement.querySelectorAll(settings.inputSelector));
-  const buttonElement = formElement.querySelector(settings.submitButtonSelector);
-  inputElements.forEach(inputElement => {
-      checkInputValidity(formElement, inputElement, settings);
-  });
-  toggleButtonState(inputElements, buttonElement, settings);
 };
 
 enableValidation(settings);
