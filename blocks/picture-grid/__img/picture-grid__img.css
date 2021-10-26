@@ -4,4 +4,9 @@
     height: 100%;
     border-radius: 10px 10px 0 0;
     cursor: pointer;
+    background-color: #000000;
+}
+
+.picture-grid__img:hover {
+    opacity: 0.7;
 }

@@ -2,6 +2,7 @@
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const profileButtonEdit = document.querySelector('.profile__edit-button');
+const profileButtonSubmit = document.querySelector('.form__submit_type_profile');
 const profilePopup = document.querySelector('.popup_type_profile');
 const profilePopupForm = profilePopup.querySelector('.popup__wrapper_type_profile');
 const profilePopupName = profilePopup.querySelector('.form__input_type_name');
@@ -9,6 +10,7 @@ const profilePopupAbout = profilePopup.querySelector('.form__input_type_about');
 const profilePopupButtonClose = profilePopup.querySelector('.popup__close_type_profile');
 
 const cardButtonAdd = document.querySelector('.profile__add-button');
+const cardButtonSubmit = document.querySelector('.form__submit_type_card');
 const cardPopup = document.querySelector('.popup_type_card');
 const cardPopupTitle = cardPopup.querySelector('.form__input_type_title');
 const cardPopupLink = cardPopup.querySelector('.form__input_type_link');
@@ -66,14 +68,8 @@ function renderCard(element) { //render new card
   closePopup(cardPopup);
 };
 
-function closePopup(element) { //close popup
-  element.classList.remove('popup_is_opened');
-  const popupSelector = element.classList.value;
-  if (popupSelector.includes('popup_type_card')) {
-    formCard.reset();
-  } else if (popupSelector.includes('popup_type_profile')) {
-    formProfile.reset();
-  }
+function closePopup(popupSelector) { //close popup
+  popupSelector.classList.remove('popup_is_opened');
   unsetEscapeListener();
 };
 
@@ -82,14 +78,14 @@ function openPopup(element) { //open popup
   setEscapeListener();
 };
 
-function closeByEscape (event) { //close popups on Escape button
-  const popupSelector = document.querySelector('.popup_is_opened');
+function closeByEscape(event) { //close popups on Escape button
   if (event.key === "Escape") {
-    closePopup(popupSelector);
+    const openPopup = document.querySelector('.popup_is_opened');
+    closePopup(openPopup);
   };
 };
 
-function setEscapeListener () {  //set event listener for escape button
+function setEscapeListener() {  //set event listener for escape button
   document.addEventListener('keydown', closeByEscape);
 };
 
@@ -97,25 +93,32 @@ function unsetEscapeListener() {   //remove event listener for escape button
   document.removeEventListener('keydown', closeByEscape);
 };
 
+//checkInitialFormValidity function was not solving the problem, 
+// it was using default browser validation and sence new card input fields are innitialy empty
+// it was erroring right on the first opening. it was also reusing code from setEventListeners function
+function disableSubmitButton(button) {
+  button.classList.add('form__submit_disabled');
+};
 
 /**=================== Generic event listeners ========================= */
-overlayPopups.forEach((element)=> {  // close popups if overlay is clicked
-  element.addEventListener('click', (event) => {
+overlayPopups.forEach((element) => {  // close popups if overlay is clicked
+  element.addEventListener('mousedown', (event) => {
     const eventTrigger = [...event.target.classList];
     if (eventTrigger.includes('popup_type_card')) {
       closePopup(cardPopup);
     } else if (eventTrigger.includes('popup_type_profile')) {
-        closePopup(profilePopup);
+      closePopup(profilePopup);
     } else if (eventTrigger.includes('popup_type_picture')) {
-        closePopup(picturePopup);
-    }
+      closePopup(picturePopup);
+    };
   });
-}); 
+});
 
 /*==================== profile event listeners ===============================*/
 profileButtonEdit.addEventListener('click', () => { //Open profile edit form
   profilePopupName.value = profileTitle.textContent;
   profilePopupAbout.value = profileSubtitle.textContent;
+  disableSubmitButton(profileButtonSubmit);
   openPopup(profilePopup);
 });
 
@@ -132,6 +135,8 @@ profilePopupForm.addEventListener('submit', (event) => { //Save edit form and cl
 
 /*=================== cardPopup event listeners ====================================================*/
 cardButtonAdd.addEventListener('click', () => { //Open new card form
+  formCard.reset();
+  disableSubmitButton(cardButtonSubmit);
   openPopup(cardPopup);
 });
 
@@ -157,11 +162,11 @@ cardWrapper.addEventListener('click', (event) => {
     case 'picture-grid__like picture-grid__like_active': //Toggle like button off
       event.target.classList.toggle('picture-grid__like_active');
       break;
-      
+
     case 'picture-grid__delete': //Delete card
       let card = event.target.closest('.picture-grid__item');
       card.remove();
-      card = null; //per reviewer's request from previous sprint, for garbage collection
+      card = null; 
       break;
 
     case 'picture-grid__img': //Expand picture
@@ -177,8 +182,8 @@ picturePopupClose.addEventListener('click', (event) => {  //Close expanded pictu
 });
 
 window.onload = () => { //Run on load to create first 6 cards
-    for (let i = 0; i < 6; i++) {
-      const tempCardHolder = createCard(initialCards[i].name, initialCards[i].link);
-      renderCard(tempCardHolder);
-    };
-};
+  for (let i = 0; i < 6; i++) {
+    const tempCardHolder = createCard(initialCards[i].name, initialCards[i].link);
+    renderCard(tempCardHolder);
+  }
+}
