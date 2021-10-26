@@ -93,11 +93,13 @@ function unsetEscapeListener() {   //remove event listener for escape button
   document.removeEventListener('keydown', closeByEscape);
 };
 
-//checkInitialFormValidity function was not solving the problem, 
-// it was using default browser validation and sence new card input fields are innitialy empty
-// it was erroring right on the first opening. it was also reusing code from setEventListeners function
+//hideInputError removes errors 100% all right, but new card-form input fields are empty on opening 
+//and element.validity.valid method recognizes them as an error.
+//i've searched for a way to reset what this method returns but i couldn't find anything
+//and it also doesn't disable submit button. i could've run toggleButtonState function, but once again - input fields are empty :-)
 function disableSubmitButton(button) {
   button.classList.add('form__submit_disabled');
+  button.setAttribute("disabled", true);
 };
 
 /**=================== Generic event listeners ========================= */
