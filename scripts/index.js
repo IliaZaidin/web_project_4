@@ -1,22 +1,22 @@
-/**=======================variables ============================== */
-const profileTitle = document.querySelector('.profile__title');
-const profileSubtitle = document.querySelector('.profile__subtitle');
-const profileButtonEdit = document.querySelector('.profile__edit-button');
-const profileButtonSubmit = document.querySelector('.form__submit_type_profile');
-const profilePopup = document.querySelector('.popup_type_profile');
-const profilePopupForm = profilePopup.querySelector('.popup__wrapper_type_profile');
-const profilePopupName = profilePopup.querySelector('.form__input_type_name');
-const profilePopupAbout = profilePopup.querySelector('.form__input_type_about');
-const profilePopupButtonClose = profilePopup.querySelector('.popup__close_type_profile');
+/**=======================imports ================================ */
+import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
+import {openPopup, closePopup} from "./utils.js";
 
-const cardButtonAdd = document.querySelector('.profile__add-button');
-const cardButtonSubmit = document.querySelector('.form__submit_type_card');
+/**=======================variables ============================== */
+const settings = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit",
+  inactiveButtonClass: "form__submit_disabled",
+  inputErrorClass: "form__input_type_error",
+  errorClass: "form__error_visible"
+}
+
 const cardPopup = document.querySelector('.popup_type_card');
-const cardPopupTitle = cardPopup.querySelector('.form__input_type_title');
-const cardPopupLink = cardPopup.querySelector('.form__input_type_link');
-const cardPopupButtonClose = cardPopup.querySelector('.popup__close_type_card');
 const cardTemplate = document.querySelector('.card-template').content;
 const cardWrapper = document.querySelector('.picture-grid');
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -44,148 +44,27 @@ const initialCards = [
   }
 ];
 
-const picturePopup = document.querySelector('.popup_type_picture');
-const picturePopupTitle = document.querySelector('.popup__title_type_picture');
-const picturePopupLink = document.querySelector('.popup__picture');
-const picturePopupClose = document.querySelector('.popup__close_type_picture');
-
-const formCard = cardPopup.querySelector('.form_type_card');
-const formProfile = profilePopup.querySelector('.form_type_profile');
-
-const overlayPopups = document.querySelectorAll('.popup');
-
-/**==================== functions =========================================== */
-function createCard(name, link) { //Create card
-  const cardCreator = cardTemplate.querySelector('.picture-grid__item').cloneNode(true);
-  cardCreator.querySelector('.picture-grid__title').textContent = name;
-  cardCreator.querySelector('.picture-grid__img').src = link;
-  cardCreator.querySelector('.picture-grid__img').alt = name;
-  return cardCreator;
-};
-
-function renderCard(element) { //render new card
+/**======================= functions ====================================== */
+export function renderCard(element) { //render new card
   cardWrapper.prepend(element);
   closePopup(cardPopup);
-};
+}
 
-function closePopup(popupSelector) { //close popup
-  popupSelector.classList.remove('popup_is_opened');
-  unsetEscapeListener();
-};
+function makeFormValidators () {
+  const forms = document.querySelectorAll(".form");
 
-function openPopup(element) { //open popup
-  element.classList.add('popup_is_opened');
-  setEscapeListener();
-};
+  forms.forEach((formElement) => {
+    const newFormValidator = new FormValidator (settings, formElement);
+    newFormValidator.enableValidation();
+  })
+}
 
-function closeByEscape(event) { //close popups on Escape button
-  if (event.key === "Escape") {
-    const openPopup = document.querySelector('.popup_is_opened');
-    closePopup(openPopup);
-  };
-};
-
-function setEscapeListener() {  //set event listener for escape button
-  document.addEventListener('keydown', closeByEscape);
-};
-
-function unsetEscapeListener() {   //remove event listener for escape button
-  document.removeEventListener('keydown', closeByEscape);
-};
-
-//hideInputError removes errors 100% all right, but new card-form input fields are empty on opening 
-//and element.validity.valid method recognizes them as an error.
-//i've searched for a way to reset what this method returns but i couldn't find anything
-//and it also doesn't disable submit button. i could've run toggleButtonState function, but once again - input fields are empty :-)
-function disableSubmitButton(button) {
-  button.classList.add('form__submit_disabled');
-  button.setAttribute("disabled", true);
-};
-
-/**=================== Generic event listeners ========================= */
-overlayPopups.forEach((element) => {  // close popups if overlay is clicked
-  element.addEventListener('mousedown', (event) => {
-    const eventTrigger = [...event.target.classList];
-    if (eventTrigger.includes('popup_type_card')) {
-      closePopup(cardPopup);
-    } else if (eventTrigger.includes('popup_type_profile')) {
-      closePopup(profilePopup);
-    } else if (eventTrigger.includes('popup_type_picture')) {
-      closePopup(picturePopup);
-    };
-  });
-});
-
-/*==================== profile event listeners ===============================*/
-profileButtonEdit.addEventListener('click', () => { //Open profile edit form
-  profilePopupName.value = profileTitle.textContent;
-  profilePopupAbout.value = profileSubtitle.textContent;
-  disableSubmitButton(profileButtonSubmit);
-  openPopup(profilePopup);
-});
-
-profilePopupButtonClose.addEventListener('click', () => { //Close profile edit form 
-  closePopup(profilePopup);
-});
-
-profilePopupForm.addEventListener('submit', (event) => { //Save edit form and close
-  event.preventDefault();
-  profileTitle.textContent = profilePopupName.value;
-  profileSubtitle.textContent = profilePopupAbout.value;
-  closePopup(profilePopup);
-});
-
-/*=================== cardPopup event listeners ====================================================*/
-cardButtonAdd.addEventListener('click', () => { //Open new card form
-  formCard.reset();
-  disableSubmitButton(cardButtonSubmit);
-  openPopup(cardPopup);
-});
-
-cardPopupButtonClose.addEventListener('click', () => { //Close new card form 
-  closePopup(cardPopup);
-});
-
-formCard.addEventListener('submit', (event) => {  //Create new card
-  event.preventDefault();
-  const tempCardHolder = createCard(cardPopupTitle.value, cardPopupLink.value);
-  renderCard(tempCardHolder);
-});
-
-/*================================ cards event listeners ============================================*/
-cardWrapper.addEventListener('click', (event) => {
-  const eventTrigger = event.target.classList.value;
-
-  switch (eventTrigger) {
-    case 'picture-grid__like': //Toggle like button on
-      event.target.classList.toggle('picture-grid__like_active');
-      break;
-
-    case 'picture-grid__like picture-grid__like_active': //Toggle like button off
-      event.target.classList.toggle('picture-grid__like_active');
-      break;
-
-    case 'picture-grid__delete': //Delete card
-      let card = event.target.closest('.picture-grid__item');
-      card.remove();
-      card = null; 
-      break;
-
-    case 'picture-grid__img': //Expand picture
-      picturePopupLink.setAttribute('src', event.target.src);
-      picturePopupTitle.textContent = event.target.nextElementSibling.textContent;
-      openPopup(picturePopup);
-      break;
-  }
-});
-
-picturePopupClose.addEventListener('click', (event) => {  //Close expanded picture
-  closePopup(picturePopup);
-});
-
+/**============================== initial runs ======================================================= */
 window.onload = () => { //Run on load to create first 6 cards
   for (let i = 0; i < 6; i++) {
-    const tempCardHolder = createCard(initialCards[i].name, initialCards[i].link);
-    renderCard(tempCardHolder);
+    const card = new Card(initialCards[i], cardTemplate);
+    renderCard(card.createCard());
   }
 }
+
+makeFormValidators(); //create validators for the popup forms
