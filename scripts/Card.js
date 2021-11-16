@@ -7,6 +7,7 @@ export default class Card {
         this._text = data.name;
         this._link = data.link;
         this._newCard = templateSelector.querySelector('.picture-grid__item').cloneNode(true);
+        this._picturePopup = document.querySelector('.popup_type_picture');
     }
 
     _setEventListeners() {
@@ -21,8 +22,9 @@ export default class Card {
 
         this._newCard.querySelector('.picture-grid__img').addEventListener('click', event=>{ //Expand picture
             document.querySelector('.popup__picture').setAttribute('src', this._link);
+            document.querySelector('.popup__picture').setAttribute('alt', this._text);
             document.querySelector('.popup__title_type_picture').textContent = this._text;
-            openPopup(document.querySelector('.popup_type_picture'));
+            openPopup(this._picturePopup);
         })
     }
 
