@@ -71,7 +71,6 @@ const cardFormValidator = new FormValidator (settings, cardForm);
 /**======================= functions ====================================== */
 function renderCard(element) { //render new card
   cardWrapper.prepend(element);
-  closePopup(cardPopup);
 }
 
 function makeCardInstance(data) {
@@ -103,7 +102,7 @@ picturePopupClose.addEventListener('click', (event) => {  //Close expanded pictu
 profileButtonEdit.addEventListener('click', () => { //Open profile edit form
   profilePopupName.value = profileTitle.textContent;
   profilePopupAbout.value = profileSubtitle.textContent;
-  profileFormValidator.disableSubmitButton();
+  profileFormValidator.resetValidation();
   openPopup(profilePopup);
 })
 
@@ -121,7 +120,7 @@ profilePopupForm.addEventListener('submit', (event) => { //Save edit form and cl
 /*=================== new card popup event listeners ====================================================*/
 cardButtonAdd.addEventListener('click', () => { //Open new card form
   cardForm.reset();
-  cardFormValidator.disableSubmitButton();
+  cardFormValidator.resetValidation();
   openPopup(cardPopup);
 })
 
@@ -136,6 +135,7 @@ cardForm.addEventListener('submit', (event) => {  //Create new card
   }
   event.preventDefault();
   renderCard(makeCardInstance(data, cardTemplate));
+  closePopup(cardPopup);
 })
 
 /**============================== initial runs ======================================================= */
