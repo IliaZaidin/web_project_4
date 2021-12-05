@@ -1,0 +1,43 @@
+@import url(../vendor/normalize.css);
+@import url(../fonts/fonts.css);
+
+@import url(../styles/page/page.css);
+@import url(../styles/page/__wrapper/page__wrapper.css);
+
+@import url(../styles/header/header.css);
+@import url(../styles/header/__logo/header__logo.css);
+
+@import url(../styles/profile/profile.css);
+@import url(../styles/profile/__add-button/profile__add-button.css);
+@import url(../styles/profile/__edit-button/profile__edit-button.css);
+@import url(../styles/profile/__picture/profile__picture.css);
+@import url(../styles/profile/__subtitle/profile__subtitle.css);
+@import url(../styles/profile/__title/profile__title.css);
+
+@import url(../styles/picture-grid/picture-grid.css);
+@import url(../styles/picture-grid/__item/picture-grid__item.css);
+@import url(../styles/picture-grid/__img/picture-grid__img.css);
+@import url(../styles/picture-grid/__title/picture-grid__title.css);
+@import url(../styles/picture-grid/__like/picture-grid__like.css);
+@import url(../styles/picture-grid/__delete/picture-grid__delete.css);
+
+@import url(../styles/popup/popup.css);
+@import url(../styles/popup/_type_picture/popup_type_picture.css);
+@import url(../styles/popup/__close/popup__close.css);
+@import url(../styles/popup/__picture/popup__picture.css);
+@import url(../styles/popup/__title/popup__title.css);
+@import url(../styles/popup/__title/__title_type_picture/popup__title_type_picture.css);
+@import url(../styles/popup/__wrapper/popup__wrapper.css);
+@import url(../styles/popup/__wrapper/__wrapper_type_picture/popup__wrapper_type_picture.css);
+@import url(../styles/popup/_is_opened/popup_is_opened.css);
+
+@import url(../styles/footer/footer.css);
+@import url(../styles/footer/__title/footer__title.css);
+
+@import url(../styles/form/__input/form__input.css);
+@import url(../styles/form/__submit/form__submit.css);
+@import url(../styles/form/form.css);
+@import url(../styles/form/__error/form__error.css);
+@import url(../styles/form/__submit/__submit_disabled/form__submit_disabled.css);
+@import url(../styles/form/__input/__input_type_error/form__input_type_error.css);
+@import url(../styles/form/__error/__error_visible/form__error_visible.css);
