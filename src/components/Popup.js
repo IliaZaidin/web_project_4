@@ -8,7 +8,6 @@ export default class Popup {
             }
         }
     }
-
     open() {
         //add close on escape event listener
         document.addEventListener('keyup', this._closeOnEscape);

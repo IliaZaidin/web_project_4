@@ -1,19 +1,22 @@
 /**=======================imports ================================ */
 import "./index.css";
 import Card from "../components/Card.js";
-import {
-  cardFormValidator, userData, profilePopupInstance, profileFormInstance, 
-  cardFormInstance, cardPopupInstance, profileFormValidator,
-  cardTemplate, picturePopupInstance, itemsRenderer
-} from "../utils/constants.js";
+import FormValidator from "../components/FormValidator";
+import UserInfo from "../components/UserInfo";
+import PopupWithForm from "../components/PopupWithForm";
+import PopupWithImage from "../components/PopupWithImage";
+import Section from "../components/Section.js";
+import { settings, initialCards, profileButtonEdit, profilePopupName, profilePopupAbout, cardButtonAdd } from "../utils/constants.js";
 
-
-/**====================== constants ========================= */
-const profileButtonEdit = document.querySelector('.profile__edit-button');
-const profilePopup = document.querySelector('.popup_type_profile');
-const profilePopupName = profilePopup.querySelector('.form__input_type_name');
-const profilePopupAbout = profilePopup.querySelector('.form__input_type_about');
-const cardButtonAdd = document.querySelector('.profile__add-button');
+/**================================= Classes Instances=================================================== */
+const profileFormValidator = new FormValidator(settings, document.querySelector('.form_type_profile'));
+const cardFormValidator = new FormValidator(settings, document.querySelector('.form_type_card'));
+const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle' });
+const profileFormInstance = new PopupWithForm(submitProfileForm, '.popup_type_profile');
+const cardFormInstance = new PopupWithForm(submitCardForm, '.popup_type_card');
+const itemsRenderer = new Section({ items: initialCards, renderer: makeCardInstance }, ".picture-grid");
+const cardTemplate = document.querySelector('.card-template').content;
+const picturePopupInstance = new PopupWithImage('.popup_type_picture');
 
 /**============================= functions ============================================ */
 //update profile
@@ -46,14 +49,14 @@ profileButtonEdit.addEventListener('click', () => {
   profilePopupName.value = name;
   profilePopupAbout.value = job;
   profileFormValidator.resetValidation();
-  profilePopupInstance.open();
+  profileFormInstance.open();
 })
 
 /*=================== new card popup event listeners ====================================================*/
 //Open new card form
 cardButtonAdd.addEventListener('click', () => {
   cardFormValidator.resetValidation();
-  cardPopupInstance.open();
+  cardFormInstance.open();
 })
 
 /**============================== initial runs =======================================================*/
