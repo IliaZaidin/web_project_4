@@ -3,9 +3,9 @@ import FormValidator from "../components/FormValidator.js";
 import Popup from "../components/Popup.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import {submitForm} from "./utils.js";
+import { submitCardForm, submitProfileForm } from "../page/index.js";
 import Section from "../components/Section.js";
-import makeCardInstance from "./utils.js";
+import makeCardInstance from "../page/index.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 
 /**======================= constants ============================== */
@@ -52,8 +52,8 @@ const settings = {
   export const profilePopupInstance = new Popup('.popup_type_profile');
   export const cardPopupInstance = new Popup('.popup_type_card');
   
-  export const profileFormInstance = new PopupWithForm(submitForm, '.popup_type_profile');
-  export const cardFormInstance = new PopupWithForm(submitForm, '.popup_type_card');
+  export const profileFormInstance = new PopupWithForm(submitProfileForm, '.popup_type_profile');
+  export const cardFormInstance = new PopupWithForm(submitCardForm, '.popup_type_card');
 
   export const itemsRenderer = new Section({ items: initialCards, renderer: makeCardInstance }, ".picture-grid");
 

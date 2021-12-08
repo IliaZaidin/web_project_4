@@ -19,7 +19,7 @@ export default class Popup {
     close() {
         //remove close on escape event listener
         document.removeEventListener('keyup', this._closeOnEscape);
-        
+
         this._popupItem.classList.remove('popup_is_opened');
     }
 

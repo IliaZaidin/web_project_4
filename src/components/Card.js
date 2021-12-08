@@ -4,8 +4,8 @@ export default class Card {
         this._text = data.card_title;
         this._link = data.card_link;
         this._newCard = templateSelector.querySelector('.picture-grid__item').cloneNode(true);
-        this._popupTitle = this._newCard.querySelector('.picture-grid__title');
-        this._popupPicture = this._newCard.querySelector('.picture-grid__img')
+        this._cardTitle = this._newCard.querySelector('.picture-grid__title');
+        this._cardPicture = this._newCard.querySelector('.picture-grid__img')
         this._handleCardClick = handleCardClick;
     }
 
@@ -28,9 +28,9 @@ export default class Card {
     }
 
     _presetNewCard() {
-        this._popupTitle.textContent = this._text;
-        this._popupPicture.src = this._link;
-        this._popupPicture.alt = this._text;
+        this._cardTitle.textContent = this._text;
+        this._cardPicture.src = this._link;
+        this._cardPicture.alt = this._text;
     }
 
     //Create card
