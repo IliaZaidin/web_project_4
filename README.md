@@ -3,4 +3,4 @@ The objective is building a one page site using the following tools: design spec
 
 Technologies used: HTML, CSS, Javascript.
 
-Link to the site: https://iliazaidin.github.io/web_project_4/dist/index.html
+Link to the site: https://iliazaidin.github.io/web_project_4/
