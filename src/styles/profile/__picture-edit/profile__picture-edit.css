@@ -1,0 +1,8 @@
+.profile__picture-edit {
+  max-width: 120px;
+  grid-area: picture;
+  background-image: url(../../../images/avatar-edit.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}

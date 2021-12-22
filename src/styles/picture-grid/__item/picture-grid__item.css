@@ -2,11 +2,15 @@
     background-color: #ffffff;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: 21px 223px 21px 17px;
-    grid-template-rows: 282px 79px;
+    grid-template-columns: 21px 220px 3px 21px 17px;
+    grid-template-rows: 282px 22px 19px 3px 13px 22px;
     grid-template-areas: 
-    "picture picture picture picture"
-    ". title like .";
+    "picture picture picture picture picture"
+    ". . . . ."
+    ". . . like ."
+    ". title title . ."
+    ". . . likes ."
+    ". . . . .";
     align-items: center;
     position: relative;
 }

@@ -1,0 +1,12 @@
+.picture-grid__likes {
+    margin: 0;
+    padding: 0;
+    font-family: Inter, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 123%;
+    color: #000000;
+    grid-area: likes;
+    text-align: center;
+}

@@ -16,18 +16,18 @@
     <div class="page__wrapper">
       <header class="header">
         <img class="header__logo" src="<%=require('../images/logo.png')%>" alt="Around US logo">
-        <!-- <img class="header__logo" src="../images/logo.png" alt="Around US logo"> -->
       </header>
 
       <main>
         <!-- Profile -->
         <section class="profile"> Profile
-          <img class="profile__picture" src="<%=require('../images/facephoto.jpg')%>" alt="Jacques Cousteau">
-          <!-- <img class="profile__picture" src="../images/facephoto.jpg" alt="Jacques Cousteau"> -->
+          <span class="profile__picture-edit">
+            <img class="profile__picture" src="" alt="no image to show">
+          </span>
           <button class="profile__edit-button" type="button"></button>
           <button class="profile__add-button" type="button">+</button>
-          <h1 class="profile__title">Ilia Zaidin</h1>
-          <p class="profile__subtitle">Expert Code Copypaster</p>
+          <h1 class="profile__title"></h1>
+          <p class="profile__subtitle"></p>
         </section>
         <!-- Pictures -->
         <section class="picture-grid"></section>
@@ -46,6 +46,18 @@
           </form>
         </div>
       </section>
+      <!-- Edit Profile Picture -->
+      <section class="popup popup_type_avatar">
+        <div class="popup__wrapper popup__wrapper_type_avatar">
+          <h2 class="popup__title popup__title_type_avatar">Change profile picture</h2>
+          <button class="popup__close popup__close_type_avatar" type="button">&#10005;</button>
+          <form class="form form_type_avatar" novalidate>
+            <input name="avatar_link" id="input_type_avatar" class="form__input form__input_type_avatar" type="url" placeholder="Link to user's avatar" required>
+            <span id="input_type_avatar_error" class="form__error"></span>
+            <button class="form__submit form__submit_type_avatar" type="submit">Save</button>
+          </form>
+        </div>
+      </section>
       <!-- Add cards -->
       <section class="popup popup_type_card">
         <div class="popup__wrapper popup__wrapper_type_card">
@@ -58,6 +70,14 @@
             <span id="input_type_link_error" class="form__error"></span>
             <button class="form__submit form__submit_type_card" type="submit">Create</button>
           </form>
+        </div>
+      </section>
+      <!-- Delete card confirmation -->
+      <section class="popup popup_type_confirm">
+        <div class="popup__wrapper popup__wrapper_type_confirm">
+          <h2 class="popup__title popup__title_type_confirm">Are you sure?</h2>
+          <button class="popup__close popup__close_type_confirm" type="button">&#10005;</button>
+          <button class="form__submit form__submit_type_confirm" type="submit">Yes</button>
         </div>
       </section>
       <!-- Expand picture -->
@@ -80,10 +100,10 @@
       <img class="picture-grid__img">
       <h2 class="picture-grid__title"></h2>
       <button class="picture-grid__like" type="button"></button>
-      <button class="picture-grid__delete" type="button"></button>
+      <button class="picture-grid__delete picture-grid__delete_disabled" type="button"></button>
+      <h3 class="picture-grid__likes">0</h3>
     </div>
   </template>
   
-  <!-- <script type="module" src="./index.js"></script> -->
 </body>
 </html>

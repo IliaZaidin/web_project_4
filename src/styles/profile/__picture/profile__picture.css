@@ -1,5 +1,9 @@
 .profile__picture {
-    grid-area: picture;
-    max-width: 120px;
+    max-width: 100%;
     border-radius: 50%;
+    cursor: pointer;
+}
+
+.profile__picture:hover {
+    opacity: 0.4;
 }

@@ -1,4 +1,4 @@
-# Project #4 in the course Basic JavaScript and Working with the Browser.
+# Project #4 in the course Applied JavaScript.
 The objective is building a one page site using the following tools: design specs and Figma, adaptive design, grid layout, developing interfaces for different devices, functionality and form validation using Javascript, OOP, form validation, webpack and more.
 
 Technologies used: HTML, CSS, Javascript.

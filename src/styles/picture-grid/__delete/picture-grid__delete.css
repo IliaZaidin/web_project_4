@@ -14,3 +14,7 @@
 .picture-grid__delete:hover {
   opacity: 0.6;
 }
+
+.picture-grid__delete_disabled {
+  display: none;
+}
