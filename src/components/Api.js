@@ -4,36 +4,27 @@ export default class Api {
         this._token = options.token;
     }
 
+    _checkResponse(res) {
+        if (res.ok) {
+            return res.json();
+        } else {
+            // return Promise.reject(`Error: ${res.status}`);
+            return Promise.reject(res);
+        }
+    }
+
     getUserData() {
         return fetch(`${this._url}/users/me`, {
             headers: { authorization: this._token }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error: ${res.status}`);
-            }
-        })
-        .catch((err) => {
-            console.log("Error: ", err.status, err.statusText);
-        });
+            .then(this._checkResponse);
     }
 
     getCards() {
         return fetch(`${this._url}/cards`, {
             headers: { authorization: this._token }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error: ${res.status}`);
-            }
-        })
-        .catch((err) => {
-            console.log("Error: ", err.status, err.statusText);
-        });
+            .then(this._checkResponse);
     }
 
     editProfile(name, about) {
@@ -48,17 +39,7 @@ export default class Api {
                 about: about
             })
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error: ${res.status}`);
-            }
-        })
-        .catch((err) => {
-            window.alert("Something went wrong. Please cancel and try again.");
-            console.log("Error: ", err.status, err.statusText);
-        });
+            .then(this._checkResponse);
     }
 
     updateProfilePicture(link) {
@@ -72,17 +53,7 @@ export default class Api {
                 avatar: link
             })
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    return Promise.reject(`Error: ${res.status}`);
-                }
-            })
-            .catch((err) => {
-                window.alert("Something went wrong. Please cancel and try again.");
-                console.log("Error: ", err.status, err.statusText);
-            });
+            .then(this._checkResponse);
     }
 
     addCard(name, link) {
@@ -97,17 +68,7 @@ export default class Api {
                 link: link
             })
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error: ${res.status}`);
-            }
-        })
-        .catch((err) => {
-            window.alert("Something went wrong. Please cancel and try again.");
-            console.log("Error: ", err.status, err.statusText);
-        });
+            .then(this._checkResponse);
     }
 
     deleteCard(id) {
@@ -115,16 +76,7 @@ export default class Api {
             method: 'DELETE',
             headers: { authorization: this._token }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error: ${res.status}`);
-            }
-        })
-        .catch((err) => {
-            console.log("Error: ", err.status, err.statusText);
-        });
+            .then(this._checkResponse);
     }
 
     like(id) {
@@ -134,16 +86,7 @@ export default class Api {
                 authorization: this._token
             }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error: ${res.status}`);
-            }
-        })
-        .catch((err) => {
-            console.log("Error: ", err.status, err.statusText);
-        });
+            .then(this._checkResponse);
     }
 
     dislike(id) {
@@ -153,15 +96,6 @@ export default class Api {
                 authorization: this._token
             }
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error: ${res.status}`);
-            }
-        })
-        .catch((err) => {
-            console.log("Error: ", err.status, err.statusText);
-        });
+            .then(this._checkResponse);
     }
 }

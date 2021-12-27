@@ -45,3 +45,6 @@ export const confirmButton = document.querySelector('.form__submit_type_confirm'
 export const profileSubmitButton = document.querySelector('.form__submit_type_profile');
 export const avatarSubmitButton = document.querySelector('.form__submit_type_avatar');
 export const cardSubmitButton = document.querySelector('.form__submit_type_card');
+export const userName = document.querySelector('.profile__title');
+export const userJob = document.querySelector('.profile__subtitle');
+export const userAvatar = document.querySelector('.profile__picture');

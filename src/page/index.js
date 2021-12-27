@@ -12,7 +12,8 @@ import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import {
   settings, profileButtonEdit, profilePopupName, profilePopupAbout,
   profileAvatar, cardButtonAdd, cardTemplate, confirmButton,
-  profileSubmitButton, avatarSubmitButton, cardSubmitButton
+  profileSubmitButton, avatarSubmitButton, cardSubmitButton,
+  userName, userJob, userAvatar
 } from "../utils/constants.js";
 
 /**================================= Classes Instances=================================================== */
@@ -29,9 +30,9 @@ const cardFormInstance = new PopupWithForm(submitCardForm, '.popup_type_card');
 const avatarFormInstance = new PopupWithForm(submitAvatarForm, '.popup_type_avatar');
 
 const itemsRenderer = new Section({ renderer: makeCardInstance }, ".picture-grid");
-const userData = new UserInfo();
+const userData = new UserInfo(userName, userJob, userAvatar);
 const picturePopupInstance = new PopupWithImage('.popup_type_picture');
-const cardDeletePopup = new PopupWithConfirmation('.popup_type_confirm');
+const cardDeletePopup = new PopupWithConfirmation('.popup_type_confirm', confirmButton);
 
 /**============================= functions ============================================ */
 //update profile
@@ -41,9 +42,15 @@ export function submitProfileForm(event, fieldsData) {
   api.editProfile(fieldsData.profile_name, fieldsData.profile_job)
     .then(profile => {
       userData.setUserInfo(profile.name, profile.about);
+    })
+    .catch((err) => {
+      window.alert("Something went wrong. Please cancel and try again.");
+      console.log("Error: ", err.status, err.statusText);
+    })
+    .finally(() => {
       profileFormInstance.close();
       profileSubmitButton.textContent = "Save";
-    })
+    });
 }
 
 //update profile avatar
@@ -53,9 +60,15 @@ function submitAvatarForm(event, fieldsData) {
   api.updateProfilePicture(fieldsData.avatar_link)
     .then(profile => {
       userData.setUserAvatar(profile.avatar);
+    })
+    .catch((err) => {
+      window.alert("Something went wrong. Please cancel and try again.");
+      console.log("Error: ", err.status, err.statusText);
+    })
+    .finally(() => {
       avatarFormInstance.close();
       avatarSubmitButton.textContent = "Save";
-    })
+    });
 }
 
 //create new card
@@ -67,6 +80,12 @@ function submitCardForm(event, fieldsData) {
       api.addCard(fieldsData.card_title, fieldsData.card_link)
         .then(card => {
           itemsRenderer.addItem(card, data._id); //called as renderer in Section.js
+        })
+        .catch((err) => {
+          window.alert("Something went wrong. Please cancel and try again.");
+          console.log("Error: ", err.status, err.statusText);
+        })
+        .finally(() => {
           cardSubmitButton.textContent = "Create";
           cardFormInstance.close();
         });
@@ -74,7 +93,7 @@ function submitCardForm(event, fieldsData) {
 }
 
 function makeCardInstance(cardData, myId) {  //called as renderer in Section.js
-  const card = new Card(cardData, myId, cardTemplate, handleCardClick, api, cardDeletePopup, confirmButton);
+  const card = new Card(cardData, myId, cardTemplate, handleCardClick, api, cardDeletePopup);
   return card.createCard();
 }
 
@@ -83,17 +102,25 @@ function handleCardClick(link, text) {
 }
 
 function loadCardsFromServer(myId) {
-  api.getCards().then(cards => {
-    itemsRenderer.renderAll(cards, myId); //in Section.js
-  });
+  api.getCards()
+    .then(cards => {
+      itemsRenderer.renderAll(cards, myId); //in Section.js
+    })
+    .catch((err) => {
+      console.log("Error: ", err.status, err.statusText);
+    });
 }
 
 function loadDataFromServer() {
-  api.getUserData().then(data => {
-    userData.setUserInfo(data.name, data.about);
-    userData.setUserAvatar(data.avatar);
-    loadCardsFromServer(data._id);
-  });
+  api.getUserData()
+    .then(data => {
+      userData.setUserInfo(data.name, data.about);
+      userData.setUserAvatar(data.avatar);
+      loadCardsFromServer(data._id);
+    })
+    .catch((err) => {
+      console.log("Error: ", err.status, err.statusText);
+    });
 }
 
 /*==================== profile event listener ===============================*/
@@ -103,7 +130,7 @@ profileButtonEdit.addEventListener('click', () => {
   profilePopupName.value = name;
   profilePopupAbout.value = job;
   profileFormValidator.resetValidation();
-  profileSubmitButton.textContent = "Save";
+  profileFormInstance.setEventListeners();
   profileFormInstance.open();
 })
 
@@ -111,14 +138,14 @@ profileButtonEdit.addEventListener('click', () => {
 //Open new card form
 cardButtonAdd.addEventListener('click', () => {
   cardFormValidator.resetValidation();
-  cardSubmitButton.textContent = "Create";
+  cardFormInstance.setEventListeners();
   cardFormInstance.open();
 })
 
 /**================== edit user's avatar event listener ================================================== */
 profileAvatar.addEventListener('click', () => {
   avatarFormValidator.resetValidation();
-  avatarSubmitButton.textContent = "Save";
+  avatarFormInstance.setEventListeners();
   avatarFormInstance.open();
 })
 
@@ -131,10 +158,4 @@ window.onload = () => {
   cardFormValidator.enableValidation();
   profileFormValidator.enableValidation();
   avatarFormValidator.enableValidation();
-
-  //enable event listeners
-  picturePopupInstance.setEventListeners();
-  profileFormInstance.setEventListeners();
-  cardFormInstance.setEventListeners();
-  avatarFormInstance.setEventListeners();
 }

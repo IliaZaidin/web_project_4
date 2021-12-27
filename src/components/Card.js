@@ -1,6 +1,6 @@
 /**================================================================*/
 export default class Card {
-    constructor(data, myId, templateSelector, handleCardClick, api, cardDeletePopup, confirmButton) {
+    constructor(data, myId, templateSelector, handleCardClick, api, cardDeletePopup) {
         this._text = data.name;
         this._link = data.link;
         this._cardId = data._id;
@@ -17,29 +17,48 @@ export default class Card {
         this._cardLikeButton = this._newCard.querySelector('.picture-grid__like');
         this._cardLikes = this._newCard.querySelector('.picture-grid__likes');
         this._cardDeleteButton = this._newCard.querySelector('.picture-grid__delete');
-        this._confirmButton = confirmButton;
 
         this._api = api;
-        this._handleCardClick = handleCardClick;
         this._cardDeletePopup = cardDeletePopup;
+        this._handleCardClick = handleCardClick;
+
+        this._confirmCardDeletion = () => {
+            this._api.deleteCard(this._cardId)
+                .then(() => {
+                    this._newCard.remove();
+                    this._newCard = null;
+                })
+                .catch((err) => {
+                    console.log("Error: ", err.status, err.statusText);
+                })
+                .finally(() => {
+                    this._cardDeletePopup.close();
+                });
+        }
     }
 
     _setEventListeners() {
         //Toggle like button
         this._cardLikeButton.addEventListener('click', event => {
             if (!this._myLike) {
-                event.target.classList.add('picture-grid__like_active');
-                this._myLike = true;
                 this._api.like(this._cardId)
                     .then(card => {
                         this._cardLikes.textContent = card.likes.length;
+                        event.target.classList.add('picture-grid__like_active');
+                        this._myLike = true;
+                    })
+                    .catch((err) => {
+                        console.log("Error: ", err.status, err.statusText);
                     });
             } else {
-                event.target.classList.remove('picture-grid__like_active');
-                this._myLike = false;
                 this._api.dislike(this._cardId)
                     .then(card => {
                         this._cardLikes.textContent = card.likes.length;
+                        event.target.classList.remove('picture-grid__like_active');
+                        this._myLike = false;
+                    })
+                    .catch((err) => {
+                        console.log("Error: ", err.status, err.statusText);
                     });
             }
         })
@@ -47,24 +66,12 @@ export default class Card {
         //Open delete confirmation 
         this._cardDeleteButton.addEventListener('click', () => {
             this._cardDeletePopup.open();
-            this._cardDeletePopup.setEventListeners();
-            this._confirmButton.addEventListener('click', () => {
-                this._api.deleteCard(this._cardId)
-                    .then(() => {
-                        this._newCard.remove();
-                        this._newCard = null;
-                        this._cardDeletePopup.close();
-                        this._confirmButton.removeEventListener('click', this._deleteCard);
-                    });
-            });
+            this._cardDeletePopup.setEventListeners(this._confirmCardDeletion);
         })
 
         //Expand picture
         this._newCard.querySelector('.picture-grid__img').addEventListener('click', event => {
-            const likers = this._likesArray.map((element)=> {
-                return " "+element.name;
-            });
-            const text = this._text+" by "+this._ownerName+". Liked by:"+likers;
+            const text = this._text + " (uploaded by " + this._ownerName + ")";
             this._handleCardClick(this._link, text);
         })
     }

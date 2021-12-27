@@ -27,7 +27,5 @@ export default class PopupWithForm extends Popup {
             this._submitForm(event, this._fieldsData);
             event.stopImmediatePropagation();
         })
-
-        super.setEventListeners();
     }
 }
