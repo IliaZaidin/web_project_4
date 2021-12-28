@@ -32,7 +32,7 @@ const avatarFormInstance = new PopupWithForm(submitAvatarForm, '.popup_type_avat
 const itemsRenderer = new Section({ renderer: makeCardInstance }, ".picture-grid");
 const userData = new UserInfo(userName, userJob, userAvatar);
 const picturePopupInstance = new PopupWithImage('.popup_type_picture');
-const cardDeletePopup = new PopupWithConfirmation('.popup_type_confirm', confirmButton);
+const confirmationPopup = new PopupWithConfirmation('.popup_type_confirm', confirmButton, confirmCardDeletion);
 
 /**============================= functions ============================================ */
 //update profile
@@ -42,13 +42,13 @@ export function submitProfileForm(event, fieldsData) {
   api.editProfile(fieldsData.profile_name, fieldsData.profile_job)
     .then(profile => {
       userData.setUserInfo(profile.name, profile.about);
+      profileFormInstance.close();
     })
     .catch((err) => {
-      window.alert("Something went wrong. Please cancel and try again.");
+      window.alert("Something went wrong. Please try again.");
       console.log("Error: ", err.status, err.statusText);
     })
     .finally(() => {
-      profileFormInstance.close();
       profileSubmitButton.textContent = "Save";
     });
 }
@@ -60,13 +60,13 @@ function submitAvatarForm(event, fieldsData) {
   api.updateProfilePicture(fieldsData.avatar_link)
     .then(profile => {
       userData.setUserAvatar(profile.avatar);
+      avatarFormInstance.close();
     })
     .catch((err) => {
-      window.alert("Something went wrong. Please cancel and try again.");
+      window.alert("Something went wrong. Please try again.");
       console.log("Error: ", err.status, err.statusText);
     })
     .finally(() => {
-      avatarFormInstance.close();
       avatarSubmitButton.textContent = "Save";
     });
 }
@@ -80,25 +80,60 @@ function submitCardForm(event, fieldsData) {
       api.addCard(fieldsData.card_title, fieldsData.card_link)
         .then(card => {
           itemsRenderer.addItem(card, data._id); //called as renderer in Section.js
+          cardFormInstance.close();
         })
         .catch((err) => {
-          window.alert("Something went wrong. Please cancel and try again.");
+          window.alert("Something went wrong. Please try again.");
           console.log("Error: ", err.status, err.statusText);
         })
         .finally(() => {
           cardSubmitButton.textContent = "Create";
-          cardFormInstance.close();
         });
     })
 }
 
-function makeCardInstance(cardData, myId) {  //called as renderer in Section.js
-  const card = new Card(cardData, myId, cardTemplate, handleCardClick, api, cardDeletePopup);
-  return card.createCard();
+function confirmCardDeletion(card, cardId) {
+  confirmationPopup.open();
+  api.deleteCard(cardId)
+    .then(() => {
+      card.remove();
+      card = null;
+      confirmationPopup.close();
+    })
+    .catch((err) => {
+      console.log("Error: ", err.status, err.statusText);
+    });
+}
+
+function handleLike(event, cardId, cardLikes) {
+  api.like(cardId)
+    .then(card => {
+      cardLikes.textContent = card.likes.length;
+      event.target.classList.add('picture-grid__like_active');
+    })
+    .catch((err) => {
+      console.log("Error: ", err.status, err.statusText);
+    });
+}
+
+function handleDislike(event, cardId, cardLikes) {
+  api.dislike(cardId)
+    .then(card => {
+      cardLikes.textContent = card.likes.length;
+      event.target.classList.remove('picture-grid__like_active');
+    })
+    .catch((err) => {
+      console.log("Error: ", err.status, err.statusText);
+    });
 }
 
 function handleCardClick(link, text) {
   picturePopupInstance.open(link, text);
+}
+
+function makeCardInstance(cardData, myId) {  //called as renderer in Section.js
+  const card = new Card(cardData, myId, cardTemplate, handleCardClick, handleLike, handleDislike, confirmationPopup);
+  return card.createCard();
 }
 
 function loadCardsFromServer(myId) {
@@ -130,7 +165,7 @@ profileButtonEdit.addEventListener('click', () => {
   profilePopupName.value = name;
   profilePopupAbout.value = job;
   profileFormValidator.resetValidation();
-  profileFormInstance.setEventListeners();
+  profileFormInstance.setEventListeners(); //added and removed on every opening
   profileFormInstance.open();
 })
 
@@ -138,14 +173,14 @@ profileButtonEdit.addEventListener('click', () => {
 //Open new card form
 cardButtonAdd.addEventListener('click', () => {
   cardFormValidator.resetValidation();
-  cardFormInstance.setEventListeners();
+  cardFormInstance.setEventListeners(); //added and removed on every opening
   cardFormInstance.open();
 })
 
 /**================== edit user's avatar event listener ================================================== */
 profileAvatar.addEventListener('click', () => {
   avatarFormValidator.resetValidation();
-  avatarFormInstance.setEventListeners();
+  avatarFormInstance.setEventListeners(); //added and removed on every opening
   avatarFormInstance.open();
 })
 

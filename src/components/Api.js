@@ -8,7 +8,6 @@ export default class Api {
         if (res.ok) {
             return res.json();
         } else {
-            // return Promise.reject(`Error: ${res.status}`);
             return Promise.reject(res);
         }
     }
