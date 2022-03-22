@@ -21,6 +21,7 @@ export const api = new Api({
   baseUrl: "https://around.nomoreparties.co/v1/group-12",
   token: "3818518a-0f00-4af2-b13c-93949a3b17de"
 });
+
 const profileFormValidator = new FormValidator(settings, document.querySelector('.form_type_profile'));
 const cardFormValidator = new FormValidator(settings, document.querySelector('.form_type_card'));
 const avatarFormValidator = new FormValidator(settings, document.querySelector('.form_type_avatar'));

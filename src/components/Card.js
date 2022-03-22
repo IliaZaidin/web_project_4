@@ -42,8 +42,11 @@ export default class Card {
         })
 
         //Expand picture
-        this._newCard.querySelector('.picture-grid__img').addEventListener('click', event => {
-            const text = this._text + " (uploaded by " + this._ownerName + ")";
+        this._newCard.querySelector('.picture-grid__img').addEventListener('click', () => {
+            // let likers = [];
+            // for (let i=0; i<this._likesArray.length; i++ )
+            //     likers[i] = this._likesArray[i].name;
+            const text = this._text + " (uploaded by " + this._ownerName + ")"; //+" Liked by: "+likers;
             this._handleCardClick(this._link, text);
         })
     }
